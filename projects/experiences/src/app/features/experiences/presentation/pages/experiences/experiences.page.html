@@ -1,1 +1,19 @@
 <p>experiences works!</p>
+
+<ng-container *ngIf="isLoggedIn !== undefined else loading">
+    <ng-container
+        *ngTemplateOutlet="isLoggedIn ? user : loginForm">
+    </ng-container>
+</ng-container>
+
+<ng-template #loading>
+    <span>Loading</span>
+</ng-template>
+
+<ng-template #user>
+    <app-experiences-user></app-experiences-user>
+</ng-template>
+
+<ng-template #loginForm>
+    <app-experiences-login-form></app-experiences-login-form>
+</ng-template>

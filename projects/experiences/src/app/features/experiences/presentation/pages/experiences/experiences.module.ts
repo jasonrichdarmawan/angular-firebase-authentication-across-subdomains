@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ExperiencesRoutingModule } from './experiences-routing.module';
 import { ExperiencesPage } from './experiences.page';
+import { ExperiencesLoginFormModule } from '../../../components/experiences-login-form/experiences-login-form.module';
+import { ExperiencesUserModule } from '../../../components/experiences-user/experiences-user.module';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { ExperiencesPage } from './experiences.page';
   ],
   imports: [
     CommonModule,
-    ExperiencesRoutingModule
+    ExperiencesRoutingModule,
+    ExperiencesUserModule,
+    ExperiencesLoginFormModule,
   ]
 })
 export class ExperiencesModule { }

@@ -1,0 +1,11 @@
+<p>checkout-login-form works!</p>
+
+<form [formGroup]="form" (ngSubmit)="submitClicked()">
+    <span>Email: </span><input type="email" formControlName="email"><br>
+    <span *ngIf="(email && email.dirty && !email.valid) ?? true" style="color: red;">Invalid email<br></span>
+
+    <span>Password: </span><input type="password" formControlName="password"><br>
+    <span *ngIf="(password && password.dirty && !password.valid) ?? true" style="color: red;">Invalid Password<br></span>
+
+    <button type="submit" [disabled]="!form.valid || isLoggingIn">{{ !isLoggingIn ? 'submit' : 'loading' }}</button>
+</form>

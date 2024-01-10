@@ -1,0 +1,18 @@
+<p>checkout-user works!</p>
+
+<ng-container *ngIf="user !== undefined else loading">
+    <ng-container *ngIf="user !== null else notLoggedIn">
+        <span>Email: {{ user.email }}<br></span>
+        <span>Email Verified: {{ user.emailVerified }}<br></span>
+    
+        <button [disabled]="isLoggingOut" (click)="logOutClicked()">{{ !isLoggingOut ? 'log out' : 'loading' }}</button>
+    </ng-container>
+</ng-container>
+
+<ng-template #loading>
+    <span>Loading</span>
+</ng-template>
+
+<ng-template #notLoggedIn>
+    <span>Not Logged In</span>
+</ng-template>
