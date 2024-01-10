@@ -9,6 +9,10 @@ import { browserLocalPersistence, getAuth, setPersistence, signInWithEmailAndPas
 })
 export class CheckoutLoginFormComponent implements OnInit {
   isLoggingIn: boolean;
+  error?: {
+    code: string;
+    message: string;
+  }
   form: FormGroup;
 
   constructor() {
@@ -65,6 +69,12 @@ export class CheckoutLoginFormComponent implements OnInit {
       // ...
 
     } catch (error: any) {
+      this.isLoggingIn = false;
+      this.error = {
+        code: error.code,
+        message: error.message,
+      };
+
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(`Error Code ${errorCode}, Error Message ${errorMessage}`)
