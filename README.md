@@ -1,5 +1,10 @@
 # How to deploy
 
+## Account
+
+1. build with `$ npx ng build --project account`
+2. deploy with `$ npx firebase-tools deploy --only hosting:account-topoint`
+
 ## Experiences
 
 1. build with `$ npx ng build --project experiences`

@@ -5,6 +5,21 @@
   },
   "hosting": [
     {
+      "site": "account-topoint",
+      "public": "dist/account",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
       "site": "experiences-topoint",
       "public": "dist/experiences",
       "ignore": [

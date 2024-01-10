@@ -1,0 +1,19 @@
+<p>account works!</p>
+
+<ng-container *ngIf="isLoggedIn !== undefined else loading">
+    <ng-container
+        *ngTemplateOutlet="isLoggedIn ? user : loginForm">
+    </ng-container>
+</ng-container>
+
+<ng-template #loading>
+    <span>Loading</span>
+</ng-template>
+
+<ng-template #user>
+    <app-account-user></app-account-user>
+</ng-template>
+
+<ng-template #loginForm>
+    <app-account-login-form></app-account-login-form>
+</ng-template>
