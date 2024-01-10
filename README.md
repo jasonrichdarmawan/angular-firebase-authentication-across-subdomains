@@ -1,3 +1,15 @@
+# How to deploy
+
+## Experiences
+
+1. build with `$ npx ng build --project experiences`
+2. deploy with `$ npx firebase-tools deploy --only hosting:experiences-topoint`
+
+## Checkout
+
+1. build with `$ npx ng build --project checkout`
+2. deploy with `$ npx firebase-tools deploy --only hosting:checkout-topoint`
+
 # AngularFirebaseAuthenticationAcrossSubdomains
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.
