@@ -19,12 +19,13 @@ jobs:
       - name: Build
         run: npm ng build --project checkout --configuration=production
       - name: Archive Production Artifact
-        run: actions/upload-artifact@master
+        uses: actions/upload-artifact@master
         with:
           name: dist/checkout
           path: dist/checkout
   deploy:
     name: Deploy
+    needs: build
     runs-on: ubuntu-latest
     environment: production
     steps:

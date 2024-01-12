@@ -19,12 +19,13 @@ jobs:
       - name: Build
         run: npm ng build --project account --configuration=production
       - name: Archive Production Artifact
-        run: actions/upload-artifact@master
+        uses: actions/upload-artifact@master
         with:
           name: dist/account
           path: dist/account
   deploy:
     name: Deploy
+    needs: build
     runs-on: ubuntu-latest
     environment: production
     steps:
