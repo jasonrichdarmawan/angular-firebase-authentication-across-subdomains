@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - projects/checkout
+      - 'projects/checkout/**'
 
 jobs:
   build:
