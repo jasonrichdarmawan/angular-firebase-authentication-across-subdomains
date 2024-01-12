@@ -1,19 +1,23 @@
-# How to deploy
+# How to do manual deployment
+
+Note: GitHub Actions will do automatic deployment when there is a change in specific folder.
+
+For example, if there is a new commit on folder `projects/account`, it will re-deploy the account site.
 
 ## Account
 
 1. build with `$ npx ng build --project account`
-2. deploy with `$ npx firebase-tools deploy --only hosting:account-topoint`
+2. deploy with `$ npx firebase-tools deploy --only hosting:account`
 
 ## Experiences
 
 1. build with `$ npx ng build --project experiences`
-2. deploy with `$ npx firebase-tools deploy --only hosting:experiences-topoint`
+2. deploy with `$ npx firebase-tools deploy --only hosting:experiences`
 
 ## Checkout
 
 1. build with `$ npx ng build --project checkout`
-2. deploy with `$ npx firebase-tools deploy --only hosting:checkout-topoint`
+2. deploy with `$ npx firebase-tools deploy --only hosting:checkout`
 
 # AngularFirebaseAuthenticationAcrossSubdomains
 
