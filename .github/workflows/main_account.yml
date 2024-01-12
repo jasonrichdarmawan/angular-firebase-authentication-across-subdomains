@@ -17,7 +17,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build
-        run: npm ng build --project account --configuration=production
+        run: npm run ng build --project account --configuration=production
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
