@@ -51,6 +51,10 @@
               ],
               "fileReplacements": [
                 {
+                  "replace": "projects/common/environments/environment.ts",
+                  "with": "projects/common/environments/environment.prod.ts"
+                },
+                {
                   "replace": "projects/experiences/src/environments/environment.ts",
                   "with": "projects/experiences/src/environments/environment.prod.ts"
                 }
@@ -75,6 +79,7 @@
               "browserTarget": "experiences:build:production"
             },
             "development": {
+              "port": 4201,
               "browserTarget": "experiences:build:development"
             }
           },
@@ -154,6 +159,10 @@
               ],
               "fileReplacements": [
                 {
+                  "replace": "projects/common/environments/environment.ts",
+                  "with": "projects/common/environments/environment.prod.ts"
+                },
+                {
                   "replace": "projects/checkout/src/environments/environment.ts",
                   "with": "projects/checkout/src/environments/environment.prod.ts"
                 }
@@ -178,6 +187,7 @@
               "browserTarget": "checkout:build:production"
             },
             "development": {
+              "port": 4202,
               "browserTarget": "checkout:build:development"
             }
           },
@@ -257,6 +267,10 @@
               ],
               "fileReplacements": [
                 {
+                  "replace": "projects/common/environments/environment.ts",
+                  "with": "projects/common/environments/environment.prod.ts"
+                },
+                {
                   "replace": "projects/account/src/environments/environment.ts",
                   "with": "projects/account/src/environments/environment.prod.ts"
                 }
@@ -281,6 +295,7 @@
               "browserTarget": "account:build:production"
             },
             "development": {
+              "port": 4200,
               "browserTarget": "account:build:development"
             }
           },

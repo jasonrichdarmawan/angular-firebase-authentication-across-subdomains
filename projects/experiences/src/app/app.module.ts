@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { environment } from '../environments/environment';
+import { commonEnvironment } from 'projects/common/environments/environment';
+import { COMMON_ENVIRONMENT_TOKEN } from 'projects/common/environments/environment.interface';
 
 const app = initializeApp(environment.firebaseConfig);
 const analytics = getAnalytics(app);
@@ -19,7 +21,12 @@ const analytics = getAnalytics(app);
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: COMMON_ENVIRONMENT_TOKEN,
+      useValue: commonEnvironment,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

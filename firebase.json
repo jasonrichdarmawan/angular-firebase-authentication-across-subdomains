@@ -5,7 +5,7 @@
   },
   "hosting": [
     {
-      "site": "account-topoint",
+      "target": "account",
       "public": "dist/account",
       "ignore": [
         "firebase.json",
@@ -20,7 +20,7 @@
       ]
     },
     {
-      "site": "experiences-topoint",
+      "target": "experiences",
       "public": "dist/experiences",
       "ignore": [
         "firebase.json",
@@ -35,7 +35,7 @@
       ]
     },
     {
-      "site": "checkout-topoint",
+      "target": "checkout",
       "public": "dist/checkout",
       "ignore": [
         "firebase.json",

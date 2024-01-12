@@ -1,5 +1,20 @@
 {
   "projects": {
     "default": "topoint-org"
+  },
+  "targets": {
+    "topoint-org": {
+      "hosting": {
+        "account": [
+          "account-topoint"
+        ],
+        "experiences": [
+          "experiences-topoint"
+        ],
+        "checkout": [
+          "checkout-topoint"
+        ]
+      }
+    }
   }
 }
