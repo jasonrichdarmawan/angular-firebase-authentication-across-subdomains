@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { User, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 @Component({
@@ -10,8 +11,12 @@ export class ExperiencesUserComponent implements OnInit {
   user?: User | null;
   isLoggingOut: boolean;
 
-  constructor() {
+  constructor(
+    @Inject(PLATFORM_ID) platformId: Object
+    ) {
     this.isLoggingOut = false;
+
+    if (isPlatformServer(platformId)) { return; }
 
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {

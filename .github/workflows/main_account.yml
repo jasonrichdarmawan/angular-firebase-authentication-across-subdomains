@@ -16,13 +16,18 @@ jobs:
         uses: actions/checkout@master
       - name: Install Dependencies
         run: npm install
-      - name: Build
+      - name: Build Angular
         run: npm run ng build --project account --configuration=production
+      - name: Build Cloud Function
+        run: npm run build:functions
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
           name: account
-          path: dist/account/
+          path: |
+            dist/account/
+            functions/dist/
+            functions/lib/
   deploy:
     name: Deploy
     needs: build
@@ -35,7 +40,6 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: account
-          path: dist/account/
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
