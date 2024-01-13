@@ -17,7 +17,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build Angular
-        run: npm run ng build --project experiences --configuration=production
+        run: npm run build:ssr:experiences
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
@@ -64,7 +64,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: experiencesCloudFunction
-          path: functions1/
+          path: functions/
       - name: Install Dependencies
         working-directory: ./functions
         run: npm install
