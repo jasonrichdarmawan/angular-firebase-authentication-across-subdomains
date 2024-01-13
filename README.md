@@ -1,3 +1,7 @@
+# How to serve
+
+Use `npm run start` to run all projects.
+
 # How to do manual deployment
 
 Note: GitHub Actions will do automatic deployment when there is a change in specific folder.

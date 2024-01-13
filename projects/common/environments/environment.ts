@@ -5,15 +5,15 @@ export const commonEnvironment: CommonEnvironment = {
     projects: {
         account: {
             // port based on angular.json
-            baseUrl: "http://localhost:4200/"
+            baseUrl: "http://localhost:4200"
         },
         experiences: {
             // port based on angular.json
-            baseUrl: "http://localhost:4201/"
+            baseUrl: "http://localhost:4201"
         },
         checkout: {
             // port based on angular.json
-            baseUrl: "http://localhost:4202/",
+            baseUrl: "http://localhost:4202",
         }
     }
 
