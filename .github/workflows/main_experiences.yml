@@ -25,6 +25,7 @@ jobs:
           path: |
             dist/experiences/
   buildCloudFunction:
+    needs: [buildAngular]
     name: Build Cloud Function
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +45,7 @@ jobs:
             functions/lib/
   deploy:
     name: Deploy
-    needs: build
+    needs: [buildAngular, buildCloudFunction]
     runs-on: ubuntu-latest
     environment: production
     steps:
