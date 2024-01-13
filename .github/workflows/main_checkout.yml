@@ -8,8 +8,8 @@ on:
       - 'projects/checkout/**'
 
 jobs:
-  build:
-    name: Build
+  buildAngular:
+    name: Build Angular
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -18,14 +18,28 @@ jobs:
         run: npm install
       - name: Build Angular
         run: npm run ng build --project checkout --configuration=production
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: checkoutAngular
+          path: |
+            dist/checkout/
+  buildCloudFunction:
+    name: Build Cloud Function
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        working-directory: functions
+        run: npm install
       - name: Build Cloud Function
         run: npm run build:functions
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
-          name: checkout
+          name: checkoutCloudFunction
           path: |
-            dist/checkout/
             functions/dist/
             functions/lib/
   deploy:
@@ -39,7 +53,11 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@master
         with:
-          name: checkout
+          name: checkoutAngular
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: checkoutCloudFunction
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:

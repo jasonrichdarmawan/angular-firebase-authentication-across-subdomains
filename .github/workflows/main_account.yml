@@ -8,8 +8,8 @@ on:
       - 'projects/account/**'
 
 jobs:
-  build:
-    name: Build
+  buildAngular:
+    name: Build Angular
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -18,14 +18,28 @@ jobs:
         run: npm install
       - name: Build Angular
         run: npm run ng build --project account --configuration=production
-      - name: Build Cloud Function
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: accountAngular
+          path: |
+            dist/account/
+  buildCloudFunction:
+    name: Build Cloud Function
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        working-directory: functions
+        run: npm install
+      - name: Build
         run: npm run build:functions
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
-          name: account
+          name: accountCloudFunction
           path: |
-            dist/account/
             functions/dist/
             functions/lib/
   deploy:
@@ -39,7 +53,11 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@master
         with:
-          name: account
+          name: accountAngular
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: accountCloudFunction
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
