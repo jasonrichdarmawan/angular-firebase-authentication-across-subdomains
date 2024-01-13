@@ -60,10 +60,12 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: experiencesAngular
+          path: dist/experiences/
       - name: Download Artifact
         uses: actions/download-artifact@master
         with:
           name: experiencesCloudFunction
+          path: functions/
       - name: Install Dependencies
         working-directory: functions
         run: npm install

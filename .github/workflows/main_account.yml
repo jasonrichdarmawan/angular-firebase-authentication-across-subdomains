@@ -60,6 +60,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: accountAngular
+          path: dist/account/
       - name: Download Artifact
         uses: actions/download-artifact@master
         with:

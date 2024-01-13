@@ -60,10 +60,12 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: checkoutAngular
+          path: dist/checkout/
       - name: Download Artifact
         uses: actions/download-artifact@master
         with:
           name: checkoutCloudFunction
+          path: functions/
       - name: Install Dependencies
         working-directory: functions
         run: npm install
