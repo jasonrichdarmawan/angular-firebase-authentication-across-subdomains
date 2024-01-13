@@ -65,6 +65,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: accountCloudFunction
+          path: functions/
       - name: Install Dependencies
         working-directory: functions
         run: npm install
