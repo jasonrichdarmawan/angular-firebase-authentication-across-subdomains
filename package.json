@@ -5,8 +5,14 @@
     "ng": "ng",
     "start": "ng serve --project account | ng serve --project experiences | ng serve --project checkout",
     
-    "build": "npm run build:ssr && npm run build:functions",
+    "build": "ng build --project account | ng build --project experiences | ng build --project checkout",
+
     "build:functions": "npm run --prefix functions build",
+    
+    "build:ssr": "npm run build:ssr:account | npm run build:ssr:experiences | npm run build:ssr:checkout ",
+    "build:ssr:account": "ng build --project account && ng run account:server",
+    "build:ssr:experiences": "ng build --project experiences && ng run experiences:server",
+    "build:ssr:checkout": "ng build --project checkout && ng run checkout:server",
 
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -20,11 +26,6 @@
     "serve:ssr:account": "export PORT=4200; node dist/account/server/main.js",
     "serve:ssr:experiences": "export PORT=4201; node dist/experiences/server/main.js",
     "serve:ssr:checkout": "export PORT=4202; node dist/checkout/server/main.js",
-
-    "build:ssr": "npm run build:ssr:account | npm run build:ssr:experiences | npm run build:ssr:checkout ",
-    "build:ssr:account": "ng build --project account && ng run account:server",
-    "build:ssr:experiences": "ng build --project experiences && ng run experiences:server",
-    "build:ssr:checkout": "ng build --project checkout && ng run checkout:server",
     
     "prerender": "ng run account:prerender"
   },

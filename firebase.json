@@ -6,7 +6,7 @@
   "hosting": [
     {
       "target": "account",
-      "public": "dist/account",
+      "public": "dist/account/browser",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -15,13 +15,13 @@
       "rewrites": [
         {
           "source": "**",
-          "function": "accountUniversal"
+          "destination": "/index.html"
         }
       ]
     },
     {
       "target": "experiences",
-      "public": "dist/experiences",
+      "public": "dist/experiences/browser",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -30,13 +30,13 @@
       "rewrites": [
         {
           "source": "**",
-          "function": "experiencesUniversal"
+          "destination": "/index.html"
         }
       ]
     },
     {
       "target": "checkout",
-      "public": "dist/checkout",
+      "public": "dist/checkout/browser",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -45,7 +45,7 @@
       "rewrites": [
         {
           "source": "**",
-          "function": "checkoutUniversal"
+          "destination": "/index.html"
         }
       ]
     }
