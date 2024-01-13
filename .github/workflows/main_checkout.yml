@@ -44,10 +44,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: checkoutCloudFunction
-          path: |
-            functions/dist/
-            functions/lib/
-            functions/.eslintrc.js
+          path: functions/
   deploy:
     name: Deploy
     needs: [buildAngular, buildCloudFunction]
