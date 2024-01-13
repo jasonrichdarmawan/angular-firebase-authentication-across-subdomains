@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'projects/experiences/**'
+      - 'functions/src/experiences-universal.ts'
 
 jobs:
   buildAngular:

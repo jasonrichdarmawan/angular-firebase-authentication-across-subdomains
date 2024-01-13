@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'projects/account/**'
+      - 'functions/src/account-universal.ts'
 
 jobs:
   buildAngular:

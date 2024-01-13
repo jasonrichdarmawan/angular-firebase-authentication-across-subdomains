@@ -3,7 +3,7 @@ import * as logger from "firebase-functions/logger";
 
 import {setGlobalOptions} from "firebase-functions/v2/options";
 
-setGlobalOptions({maxInstances: 10});
+setGlobalOptions({maxInstances: 10, region: "asia-east1"});
 
 export const accountUniversal = onRequest((request, response) => {
   logger.info("accountUniversal");
