@@ -8,6 +8,6 @@ setGlobalOptions({maxInstances: 10, region: "asia-east1"});
 export const checkoutUniversal = onRequest((request, response) => {
   logger.info("checkoutUniversal");
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require("../dist/experiences/server/main")
+  require("../dist/checkout/server/main")
     .app()(request, response);
 });
