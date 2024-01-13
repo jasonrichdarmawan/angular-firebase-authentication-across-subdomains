@@ -22,8 +22,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: experiencesAngular
-          path: |
-            dist/experiences/
+          path: dist/experiences/
   buildCloudFunction:
     needs: [buildAngular]
     name: Build Cloud Function
@@ -38,6 +37,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: experiencesAngular
+          path: dist/experiences/
       - name: Build Cloud Function
         run: npm run build:functions
       - name: Archive Production Artifact

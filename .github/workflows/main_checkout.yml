@@ -22,8 +22,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: checkoutAngular
-          path: |
-            dist/checkout/
+          path: dist/checkout/
   buildCloudFunction:
     name: Build Cloud Function
     needs: [buildAngular]
@@ -38,6 +37,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: checkoutAngular
+          path: dist/checkout/
       - name: Build Cloud Function
         run: npm run build:functions
       - name: Archive Production Artifact
