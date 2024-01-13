@@ -31,6 +31,16 @@ For example, if there is a new commit on folder `projects/account`, it will re-d
 
 1. [Universal with Cloud Function](https://github.com/angular/angularfire/blob/master/docs/universal/cloud-functions.md)
 
+2. [Deploying Cloud Function Role](https://cloud.google.com/functions/docs/deploy#:~:text=Users%20deploying%20Cloud%20Functions%20must,or%20the%20Google%20Cloud%20console.)
+
+    1. run in Cloud Shell 
+    
+        ```
+        $ gcloud projects add-iam-policy-binding 1055366435833 --member=serviceAccount:topoint-hosting-sa@topoint-org.iam.gserviceaccount.com --role=roles/cloudfunctions.developer
+        gcloud projects add-iam-policy-binding 1055366435833 --member=serviceAccount:topoint-hosting-sa@topoint-org.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser
+        ```
+    2. deploy with CI/CD
+
 Note: Before Angular 17, SSR is not production ready. This is because `$ ng serve` does not enable SSR by default.
 
 The consequence is that we do not know the code below does not work with SSR.
