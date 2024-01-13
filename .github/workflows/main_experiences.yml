@@ -44,7 +44,9 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: experiencesCloudFunction
-          path: functions/
+          path: |
+            functions/**
+            !functions/node_modules
   deploy:
     name: Deploy
     needs: [buildAngular, buildCloudFunction]
