@@ -38,8 +38,8 @@ For example, if there is a new commit on folder `projects/account`, it will re-d
     1. run in Cloud Shell 
     
         ```
-        $ gcloud projects add-iam-policy-binding 1055366435833 --member=serviceAccount:topoint-hosting-sa@topoint-org.iam.gserviceaccount.com --role=roles/cloudfunctions.developer
-        gcloud projects add-iam-policy-binding 1055366435833 --member=serviceAccount:topoint-hosting-sa@topoint-org.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser
+        $ gcloud projects add-iam-policy-binding $GCP_PROJECT_ID --member=serviceAccount:GCP_SVC_ACC --role=roles/cloudfunctions.developer
+        gcloud projects add-iam-policy-binding $GCP_PROJECT_ID --member=serviceAccount:${GCP_SVC_ACC} --role=roles/iam.serviceAccountUser
         ```
     2. deploy with CI/CD
 
