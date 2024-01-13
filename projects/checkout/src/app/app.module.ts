@@ -5,19 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
-import { getAnalytics } from 'firebase/analytics';
+// import { getAnalytics } from 'firebase/analytics';
 import { COMMON_ENVIRONMENT_TOKEN } from 'projects/common/environments/environment.interface';
 import { commonEnvironment } from 'projects/common/environments/environment';
 
 const app = initializeApp(environment.firebaseConfig);
-const analytics = getAnalytics(app);
+
+/**
+ * @todo issue with Cloud Function
+ */
+// const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule
   ],
   providers: [

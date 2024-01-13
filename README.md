@@ -23,6 +23,27 @@ For example, if there is a new commit on folder `projects/account`, it will re-d
 1. build with `$ npx ng build --project checkout`
 2. deploy with `$ npx firebase-tools deploy --only hosting:checkout`
 
+# How to add SSR to Angular Application
+
+1. add with `$ npx ng add @nguniversal/express-engine --project account`
+
+# Reference
+
+1. [Universal with Cloud Function](https://github.com/angular/angularfire/blob/master/docs/universal/cloud-functions.md)
+
+Note: Before Angular 17, SSR is not production ready. This is because `$ ng serve` does not enable SSR by default.
+
+The consequence is that we do not know the code below does not work with SSR.
+
+app.module.ts
+```
+import { getAnalytics } from 'firebase/analytics';
+
+const analytics = getAnalytics(app);
+```
+
+The solution is to use `$ ng run <application>:serve-ssr`
+
 # AngularFirebaseAuthenticationAcrossSubdomains
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.

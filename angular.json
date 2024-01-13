@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/experiences",
+            "outputPath": "dist/experiences/browser",
             "index": "projects/experiences/src/index.html",
             "main": "projects/experiences/src/main.ts",
             "polyfills": "projects/experiences/src/polyfills.ts",
@@ -108,6 +108,69 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/experiences/server",
+            "main": "projects/experiences/server.ts",
+            "tsConfig": "projects/experiences/tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "projects/common/environments/environment.ts",
+                  "with": "projects/common/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "projects/experiences/src/environments/environment.ts",
+                  "with": "projects/experiences/src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "experiences:build:development",
+              "serverTarget": "experiences:server:development"
+            },
+            "production": {
+              "browserTarget": "experiences:build:production",
+              "serverTarget": "experiences:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "experiences:build:production",
+              "serverTarget": "experiences:server:production"
+            },
+            "development": {
+              "browserTarget": "experiences:build:development",
+              "serverTarget": "experiences:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     },
@@ -128,7 +191,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/checkout",
+            "outputPath": "dist/checkout/browser",
             "index": "projects/checkout/src/index.html",
             "main": "projects/checkout/src/main.ts",
             "polyfills": "projects/checkout/src/polyfills.ts",
@@ -216,6 +279,69 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/checkout/server",
+            "main": "projects/checkout/server.ts",
+            "tsConfig": "projects/checkout/tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "projects/common/environments/environment.ts",
+                  "with": "projects/common/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "projects/checkout/src/environments/environment.ts",
+                  "with": "projects/checkout/src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "checkout:build:development",
+              "serverTarget": "checkout:server:development"
+            },
+            "production": {
+              "browserTarget": "checkout:build:production",
+              "serverTarget": "checkout:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "checkout:build:production",
+              "serverTarget": "checkout:server:production"
+            },
+            "development": {
+              "browserTarget": "checkout:build:development",
+              "serverTarget": "checkout:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     },
@@ -236,7 +362,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/account",
+            "outputPath": "dist/account/browser",
             "index": "projects/account/src/index.html",
             "main": "projects/account/src/main.ts",
             "polyfills": "projects/account/src/polyfills.ts",
@@ -324,6 +450,69 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/account/server",
+            "main": "projects/account/server.ts",
+            "tsConfig": "projects/account/tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "projects/common/environments/environment.ts",
+                  "with": "projects/common/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "projects/account/src/environments/environment.ts",
+                  "with": "projects/account/src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "account:build:development",
+              "serverTarget": "account:server:development"
+            },
+            "production": {
+              "browserTarget": "account:build:production",
+              "serverTarget": "account:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "account:build:production",
+              "serverTarget": "account:server:production"
+            },
+            "development": {
+              "browserTarget": "account:build:development",
+              "serverTarget": "account:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
