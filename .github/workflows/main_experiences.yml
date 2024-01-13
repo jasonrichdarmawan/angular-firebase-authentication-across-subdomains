@@ -31,7 +31,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
       - name: Install Dependencies
-        working-directory: functions
+        working-directory: ./functions
         run: npm install
       - name: Download Artifact
         uses: actions/download-artifact@master
@@ -64,9 +64,9 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: experiencesCloudFunction
-          path: functions/
+          path: functions1/
       - name: Install Dependencies
-        working-directory: functions
+        working-directory: ./functions
         run: npm install
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master

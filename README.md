@@ -33,6 +33,8 @@ For example, if there is a new commit on folder `projects/account`, it will re-d
 
 2. [Deploying Cloud Function Role](https://cloud.google.com/functions/docs/deploy#:~:text=Users%20deploying%20Cloud%20Functions%20must,or%20the%20Google%20Cloud%20console.)
 
+    [from StackOverflow](https://stackoverflow.com/a/65237749/13285583)
+
     1. run in Cloud Shell 
     
         ```
