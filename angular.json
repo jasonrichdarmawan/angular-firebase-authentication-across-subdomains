@@ -171,6 +171,15 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "experiences:build:production",
+            "serverTarget": "experiences:server:production",
+            "prerenderTarget": "experiences:prerender:production"
+          }
         }
       }
     },
@@ -342,6 +351,15 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "checkout:build:production",
+            "serverTarget": "checkout:server:production",
+            "prerenderTarget": "checkout:prerender:production"
+          }
         }
       }
     },
@@ -513,6 +531,15 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "account:build:production",
+            "serverTarget": "account:server:production",
+            "prerenderTarget": "account:prerender:production"
+          }
         }
       }
     }

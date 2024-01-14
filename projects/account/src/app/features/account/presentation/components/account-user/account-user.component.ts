@@ -1,6 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { User, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { Auth, User, getAuth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-account-user',
@@ -12,13 +12,13 @@ export class AccountUserComponent implements OnInit {
   isLoggingOut: boolean;
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
+    auth: Auth,
     ) {
     this.isLoggingOut = false;
     
     if (isPlatformServer(platformId)) { return; }
 
-    const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // Signed In

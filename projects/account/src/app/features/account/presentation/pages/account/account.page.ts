@@ -1,6 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-account',
@@ -11,11 +11,11 @@ export class AccountPage implements OnInit {
   isLoggedIn?: boolean;
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
+    auth: Auth,
     ) {
     if (isPlatformServer(platformId)) { return; }
     
-    let auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.isLoggedIn = true;

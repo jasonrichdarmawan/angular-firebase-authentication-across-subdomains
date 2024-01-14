@@ -1,6 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { User, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { User, Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-experiences-user',
@@ -12,14 +12,14 @@ export class ExperiencesUserComponent implements OnInit {
   isLoggingOut: boolean;
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
+    private auth: Auth,
     ) {
     this.isLoggingOut = false;
 
     if (isPlatformServer(platformId)) { return; }
 
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(this.auth, (user) => {
       if (user) {
         // Signed In
         this.user = user;
@@ -33,10 +33,9 @@ export class ExperiencesUserComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async logOutClicked(): Promise<boolean> {
-    const auth = getAuth();
+  async logOutClicked(): Promise<boolean> {;
     try {
-      await signOut(auth);
+      await signOut(this.auth);
       // Sign-out  successful.
     } catch (error) {
       // An error happened.

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { browserLocalPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
+import { setPersistence } from 'firebase/auth';
+import { inMemoryPersistence, Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-checkout-login-form',
@@ -15,7 +16,9 @@ export class CheckoutLoginFormComponent implements OnInit {
   }
   form: FormGroup;
 
-  constructor() {
+  constructor(
+    private auth: Auth
+    ) {
     this.isLoggingIn = false;
     this.form = new FormGroup({
       email: new FormControl(
@@ -57,12 +60,11 @@ export class CheckoutLoginFormComponent implements OnInit {
     if (this.email === null) { return false; }
     if (this.password === null) { return false; }
     
-    const auth = getAuth();
-    setPersistence(auth, browserLocalPersistence);
+    setPersistence(this.auth as any, inMemoryPersistence);
 
     this.isLoggingIn = true;
     try {
-      let userCredential = await signInWithEmailAndPassword(auth, this.email.value, this.password.value)
+      let userCredential = await signInWithEmailAndPassword(this.auth, this.email.value, this.password.value)
       this.isLoggingIn = false;
       // Signed in
       const user = userCredential.user;

@@ -1,6 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { User, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { User, Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-checkout-user',
@@ -12,13 +12,13 @@ export class CheckoutUserComponent implements OnInit {
   isLoggingOut: boolean;
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
+    private auth: Auth
     ) {
     this.isLoggingOut = false;
     
     if (isPlatformServer(platformId)) { return; }
 
-    const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // Signed In
@@ -34,9 +34,8 @@ export class CheckoutUserComponent implements OnInit {
   }
 
   async logOutClicked(): Promise<boolean> {
-    const auth = getAuth();
     try {
-      await signOut(auth);
+      await signOut(this.auth);
       // Sign-out  successful.
     } catch (error) {
       // An error happened.
