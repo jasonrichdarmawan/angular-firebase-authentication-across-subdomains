@@ -1,6 +1,8 @@
-export const environment = {
+import { Environment } from "./environment.interface";
+
+export const environment: Environment = {
   production: true,
-  firebaseConfig: {
+  firebase: {
     apiKey: "AIzaSyCT8OTxHqqKBKxNdMWodiscgnH59gFR9V0",
     authDomain: "topoint-org.firebaseapp.com",
     projectId: "topoint-org",

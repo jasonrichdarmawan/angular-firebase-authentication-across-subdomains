@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 import { COMMON_ENVIRONMENT_TOKEN } from 'projects/common/environments/environment.interface';
 import { commonEnvironment } from 'projects/common/environments/environment';
 
-const app = initializeApp(environment.firebaseConfig);
+const app = initializeApp(environment.firebase);
 
 /**
  * @todo issue with Cloud Function
