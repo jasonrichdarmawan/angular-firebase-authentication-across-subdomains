@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'projects/account/**'
-      - 'functions/src/account-universal.ts'
 
 jobs:
   buildAngular:
@@ -18,39 +17,15 @@ jobs:
       - name: Install Angular Dependencies
         run: npm install
       - name: Build Angular
-        run: npm run build:ssr:account
+        run: ng build --project account
       - name: Archive Angular Artifact
         uses: actions/upload-artifact@master
         with:
           name: accountAngular
           path: dist/account/
-  buildCloudFunction:
-    name: Build Cloud Function
-    needs: [buildAngular]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-      - name: Install Cloud Function Dependencies
-        working-directory: ./functions
-        run: npm install
-      - name: Download Angular Artifact
-        uses: actions/download-artifact@master
-        with:
-          name: accountAngular
-          path: dist/account/
-      - name: Build
-        run: npm run build:functions
-      - name: Archive Cloud Function Artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: accountCloudFunction
-          path: |
-            functions/**
-            !functions/node_modules
   deploy:
     name: Deploy
-    needs: [buildAngular, buildCloudFunction]
+    needs: [buildAngular]
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -61,17 +36,9 @@ jobs:
         with:
           name: accountAngular
           path: dist/account/
-      - name: Download Cloud Function Artifact
-        uses: actions/download-artifact@master
-        with:
-          name: accountCloudFunction
-          path: functions/
-      - name: Install Cloud Function Dependencies
-        working-directory: ./functions
-        run: npm install
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:account,functions:accountUniversal
+          args: deploy --only hosting:account
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_TO_POINT_ORG }}

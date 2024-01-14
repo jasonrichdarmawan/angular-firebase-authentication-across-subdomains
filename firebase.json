@@ -15,7 +15,7 @@
       "rewrites": [
         {
           "source": "**",
-          "function": "accountUniversal"
+          "destination": "/index.html"
         }
       ]
     },
@@ -45,7 +45,7 @@
       "rewrites": [
         {
           "source": "**",
-          "function": "checkoutUniversal"
+          "destination": "/index.html"
         }
       ]
     }

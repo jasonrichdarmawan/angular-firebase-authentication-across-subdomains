@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'projects/checkout/**'
-      - 'functions/src/checkout-universal.ts'
 
 jobs:
   buildAngular:
@@ -18,39 +17,15 @@ jobs:
       - name: Install Angular Dependencies
         run: npm install
       - name: Build Angular
-        run: npm run build:ssr:checkout
+        run: ng build --project checkout
       - name: Archive Angular Artifact
         uses: actions/upload-artifact@master
         with:
           name: checkoutAngular
           path: dist/checkout/
-  buildCloudFunction:
-    name: Build Cloud Function
-    needs: [buildAngular]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-      - name: Install Cloud Function Dependencies
-        working-directory: ./functions
-        run: npm install
-      - name: Download Angular Artifact
-        uses: actions/download-artifact@master
-        with:
-          name: checkoutAngular
-          path: dist/checkout/
-      - name: Build Cloud Function
-        run: npm run build:functions
-      - name: Archive Cloud Function Artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: checkoutCloudFunction
-          path: |
-            functions/**
-            !functions/node_modules
   deploy:
     name: Deploy
-    needs: [buildAngular, buildCloudFunction]
+    needs: [buildAngular]
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -61,17 +36,9 @@ jobs:
         with:
           name: checkoutAngular
           path: dist/checkout/
-      - name: Download Cloud Function Artifact
-        uses: actions/download-artifact@master
-        with:
-          name: checkoutCloudFunction
-          path: functions/
-      - name: Install Cloud Function Dependencies
-        working-directory: ./functions
-        run: npm install
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:checkout,functions:checkoutUniversal
+          args: deploy --only hosting:checkout
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_TO_POINT_ORG }}

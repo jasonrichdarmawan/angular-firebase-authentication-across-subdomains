@@ -1,3 +1,9 @@
+# Application Structure
+
+- account: use CSR.
+- experiences: use SSR.
+- checkout: use CSR.
+
 # How to serve
 
 Use `npm run start` to run all projects.
