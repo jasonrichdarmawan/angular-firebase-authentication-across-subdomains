@@ -3,29 +3,28 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --project account | ng serve --project experiences | ng serve --project checkout",
+
+    "serve": "npm run start | npm run dev:ssr",
+
+    "start": "npm run start:account | npm run start:checkout",
+    "start:account": "ng serve --project account",
+    "start:checkout": "ng serve --project checkout",
+
+    "dev:ssr": "npm run dev:ssr:experiences",
+    "dev:ssr:experiences": "ng run experiences:serve-ssr --port 4201",
     
     "build": "npm run build:ssr && npm run build:functions",
+    
+    "build:ssr": "npm run build:ssr:experiences",
+    "build:ssr:experiences": "ng build --project experiences && ng run experiences:server",
 
     "build:functions": "npm run --prefix functions build",
-    
-    "build:ssr": "npm run build:ssr:account | npm run build:ssr:experiences | npm run build:ssr:checkout ",
-    "build:ssr:account": "ng build --project account && ng run account:server",
-    "build:ssr:experiences": "ng build --project experiences && ng run experiences:server",
-    "build:ssr:checkout": "ng build --project checkout && ng run checkout:server",
+
+    "serve:ssr": "npm run serve:ssr:experiences",
+    "serve:ssr:experiences": "export PORT=4201; node dist/experiences/server/main.js",
 
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-
-    "dev:ssr": "npm run dev:ssr:account | npm run dev:ssr:experiences | npm run dev:ssr:checkout",
-    "dev:ssr:account": "ng run account:serve-ssr --port 4200",
-    "dev:ssr:experiences": "ng run experiences:serve-ssr --port 4201",
-    "dev:ssr:checkout": "ng run checkout:serve-ssr --port 4202",
-
-    "serve:ssr": "npm run serve:ssr:account | npm run serve:ssr:experiences | npm run serve:ssr:checkout",
-    "serve:ssr:account": "export PORT=4200; node dist/account/server/main.js",
-    "serve:ssr:experiences": "export PORT=4201; node dist/experiences/server/main.js",
-    "serve:ssr:checkout": "export PORT=4202; node dist/checkout/server/main.js",
     
     "prerender": "ng run account:prerender"
   },
