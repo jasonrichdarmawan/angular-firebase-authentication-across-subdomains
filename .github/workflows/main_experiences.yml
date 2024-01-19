@@ -40,7 +40,7 @@ jobs:
           name: experiencesAngular
           path: dist/experiences/
       - name: Build Cloud Function
-        run: npm run build:functions
+        run: npm run --prefix functions copy:experiences && npm run build:functions
       - name: Archive Cloud Function Artifact
         uses: actions/upload-artifact@master
         with:

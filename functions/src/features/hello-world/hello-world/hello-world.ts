@@ -4,6 +4,7 @@ import {setGlobalOptions} from "firebase-functions/v2/options";
 
 setGlobalOptions({maxInstances: 10, region: "asia-east1"});
 
+
 export const helloWorld = onRequest((request, response) => {
   info("helloWorld");
   response.send({

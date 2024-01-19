@@ -3,10 +3,10 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
 
-    "tsc": "tsc",
-    "build": "rm -rf ./dist && npm run copy && tsc",
-    "copy": "npm run copy:experiences",
+    "copy": "rm -rf ./dist && npm run copy:experiences",
     "copy:experiences": "rm -rf ./dist/experiences && mkdir -p ./dist/experiences && cp -r ../dist/experiences ./dist/",
+    
+    "build": "tsc",
 
     "build:watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
