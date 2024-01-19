@@ -62,6 +62,17 @@ const analytics = getAnalytics(app);
 
 The solution is to use `$ ng run <application>:serve-ssr`
 
+# Bug Solution
+
+1. `Component auth has not been registered yet`
+
+Check if `@angular/fire` and `firebase` have mismatch version with `npm ls @firebase/app`.
+
+1. remove `node_modules` and `package-lock.json`.
+2. Install the version used by `@angular/fire`.
+
+reference: https://github.com/firebase/firebase-js-sdk/issues/6019
+
 # AngularFirebaseAuthenticationAcrossSubdomains
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.

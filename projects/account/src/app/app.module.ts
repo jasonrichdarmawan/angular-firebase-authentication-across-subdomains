@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { commonEnvironment } from 'projects/common/environments/environment';
 import { COMMON_ENVIRONMENT_TOKEN } from 'projects/common/environments/environment.interface';
-import { FirebaseApp, initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { FirebaseApp, getApp, initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
@@ -20,8 +20,8 @@ import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angula
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),
+    provideAnalytics(() => getAnalytics()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => {
       const app = inject(FirebaseApp);

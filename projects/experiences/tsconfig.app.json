@@ -3,7 +3,10 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
-    "types": []
+    "types": [],
+    // bug due to @angular/fire@7.6.1 depend on rxfire@6.0.5
+    // remove after upgrading @angular/fire
+    "skipLibCheck": true,
   },
   "files": [
     "src/main.ts",
