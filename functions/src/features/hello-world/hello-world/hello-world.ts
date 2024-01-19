@@ -13,7 +13,7 @@ export const helloWorld = onRequest((request, response) => {
 });
 
 const handleCors = (request: Request, response: Response) => {
-  const allowedOrigins = ["https://account.topoint.org", "https://experiences.topoint.org", "https://checkout.topoitn.org"];
+  const allowedOrigins = ["https://account.topoint.org", "https://experiences.topoint.org", "https://checkout.topoint.org"];
   const origin = request.get("origin") ?? "";
 
   if (allowedOrigins.includes(origin)) {
