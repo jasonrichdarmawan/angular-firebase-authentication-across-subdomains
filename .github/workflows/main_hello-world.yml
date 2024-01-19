@@ -28,7 +28,7 @@ jobs:
             !functions/node_modules
   deploy:
     name: Deploy
-    needs: [buildAngular, buildCloudFunction]
+    needs: [buildCloudFunction]
     runs-on: ubuntu-latest
     environment: production
     steps:
