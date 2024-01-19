@@ -1,6 +1,7 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 
 @Component({
   selector: 'app-checkout',
@@ -9,14 +10,25 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 })
 export class CheckoutPage implements OnInit {
   isLoggedIn?: boolean;
+  helloWorld?: string;
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private auth: Auth,
+    private functions: Functions
     ) {
-    if (isPlatformServer(platformId)) { return; }
+
+    this.initIsLoggedIn();
+    this.fetchHelloWorld();
+  }
+
+  ngOnInit(): void {
+  }
+
+  private initIsLoggedIn() {
+    if (isPlatformServer(this.platformId)) { return; }
     
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.isLoggedIn = true;
       } else {
@@ -25,6 +37,9 @@ export class CheckoutPage implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  private async fetchHelloWorld() {
+    const callable = httpsCallable<undefined, string>(this.functions, "helloWorld");
+    const { data } = await callable();
+    this.helloWorld = data;
   }
 }

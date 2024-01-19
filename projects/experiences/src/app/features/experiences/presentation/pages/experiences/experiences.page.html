@@ -1,19 +1,20 @@
 <p>experiences works!</p>
 
-<ng-container *ngIf="isLoggedIn !== undefined else loading">
-    <ng-container
-        *ngTemplateOutlet="isLoggedIn ? user : loginForm">
+<ng-container [ngSwitch]="helloWorld">
+    <ng-container *ngSwitchCase="undefined">
+        <ng-container *ngTemplateOutlet="loading"></ng-container>
     </ng-container>
+    <p *ngSwitchDefault>response from the helloWorld cloud function: {{ helloWorld }}</p>
+</ng-container>
+
+<ng-container [ngSwitch]="isLoggedIn">
+    <ng-container *ngSwitchCase="undefined">
+        <ng-container *ngTemplateOutlet="loading"></ng-container>
+    </ng-container>
+    <app-experiences-login-form *ngSwitchCase="false"></app-experiences-login-form>
+    <app-experiences-user *ngSwitchCase="true"></app-experiences-user>
 </ng-container>
 
 <ng-template #loading>
     <span>Loading</span>
-</ng-template>
-
-<ng-template #user>
-    <app-experiences-user></app-experiences-user>
-</ng-template>
-
-<ng-template #loginForm>
-    <app-experiences-login-form></app-experiences-login-form>
 </ng-template>

@@ -24,7 +24,7 @@ export class AccountPage implements OnInit {
   ngOnInit(): void {
   }
 
-  private async initIsLoggedIn() {
+  private initIsLoggedIn() {
     if (isPlatformServer(this.platformId)) { return; }
 
     onAuthStateChanged(this.auth, (user) => {
