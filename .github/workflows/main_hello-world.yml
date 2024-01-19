@@ -9,7 +9,6 @@ on:
 
 jobs:
   buildCloudFunction:
-    needs: [buildAngular]
     name: Build Cloud Function
     runs-on: ubuntu-latest
     steps:
