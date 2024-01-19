@@ -1,7 +1,7 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-import { Functions, HttpsCallableResult, connectFunctionsEmulator, getFunctions, httpsCallable } from '@angular/fire/functions';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 
 @Component({
   selector: 'app-account',
