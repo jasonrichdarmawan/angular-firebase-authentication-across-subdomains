@@ -1,6 +1,7 @@
-import { isPlatformServer } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { Functions, HttpsCallableResult, connectFunctionsEmulator, getFunctions, httpsCallable } from '@angular/fire/functions';
 
 @Component({
   selector: 'app-account',
@@ -9,14 +10,24 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 })
 export class AccountPage implements OnInit {
   isLoggedIn?: boolean;
+  helloWorld?: string;
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object,
-    auth: Auth,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private auth: Auth,
+    private functions: Functions,
     ) {
-    if (isPlatformServer(platformId)) { return; }
-    
-    onAuthStateChanged(auth, (user) => {
+    this.fetchHelloWorld();
+    this.initIsLoggedIn();
+  }
+
+  ngOnInit(): void {
+  }
+
+  private async initIsLoggedIn() {
+    if (isPlatformServer(this.platformId)) { return; }
+
+    onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.isLoggedIn = true;
       } else {
@@ -25,6 +36,9 @@ export class AccountPage implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  private async fetchHelloWorld() {
+    const callable = httpsCallable<undefined, string>(this.functions, "helloWorld");
+    const { data } = await callable();
+    this.helloWorld = data;
   }
 }

@@ -12,5 +12,6 @@ export const commonEnvironment: CommonEnvironment = {
         checkout: {
             baseUrl: "https://checkout.topoint.org",
         },
-    }
+    },
+    useEmulators: false,
 }

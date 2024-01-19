@@ -9,6 +9,14 @@ export interface CommonEnvironment {
         experiences: Project,
         checkout: Project,
     };
+    useEmulators: boolean;
+    emulators?: {
+        functions: Emulator;
+    }
+}
+
+export interface Emulator {
+    port: number;
 }
 
 export interface Project {

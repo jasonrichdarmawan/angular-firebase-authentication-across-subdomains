@@ -10,7 +10,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideFunctions,getFunctions } from '@angular/fire/functions';
+import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
 
 @NgModule({
   declarations: [
@@ -23,14 +23,21 @@ import { provideFunctions,getFunctions } from '@angular/fire/functions';
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideFunctions(() => getFunctions())
+    provideFunctions(() => {
+      const functions = getFunctions();
+      if (commonEnvironment.useEmulators) {
+        connectFunctionsEmulator(functions, "127.0.0.1", commonEnvironment.emulators!.functions.port);
+      }
+      return functions;
+    })
   ],
   providers: [
     { 
       provide: COMMON_ENVIRONMENT_TOKEN,
       useValue: commonEnvironment,
     },
-    ScreenTrackingService,UserTrackingService,
+    ScreenTrackingService,
+    UserTrackingService,
   ],
   bootstrap: [AppComponent]
 })

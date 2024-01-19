@@ -1,19 +1,20 @@
 <p>account works!</p>
 
-<ng-container *ngIf="isLoggedIn !== undefined else loading">
-    <ng-container
-        *ngTemplateOutlet="isLoggedIn ? user : loginForm">
+<ng-container [ngSwitch]="helloWorld">
+    <ng-container *ngSwitchCase="undefined">
+        <ng-container *ngTemplateOutlet="loading"></ng-container>
     </ng-container>
+    <p *ngSwitchDefault>response from the helloWorld cloud function: {{ helloWorld }}</p>
+</ng-container>
+
+<ng-container [ngSwitch]="isLoggedIn">
+    <ng-container *ngSwitchCase="undefined">
+        <ng-container *ngTemplateOutlet="loading"></ng-container>
+    </ng-container>
+    <app-account-login-form *ngSwitchCase="false"></app-account-login-form>
+    <app-account-user *ngSwitchCase="true"></app-account-user>
 </ng-container>
 
 <ng-template #loading>
-    <span>Loading</span>
-</ng-template>
-
-<ng-template #user>
-    <app-account-user></app-account-user>
-</ng-template>
-
-<ng-template #loginForm>
-    <app-account-login-form></app-account-login-form>
+    <span>Loading<br></span>
 </ng-template>

@@ -14,7 +14,12 @@ export const commonEnvironment: CommonEnvironment = {
         checkout: {
             // port based on angular.json
             baseUrl: "http://localhost:4202",
-        }
-    }
-
+        },
+    },
+    useEmulators: true,
+    emulators: {
+        functions: {
+            port: 5001,
+        },
+    },
 }
