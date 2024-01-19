@@ -3,6 +3,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
 
+    "tsc": "tsc",
     "build": "rm -rf ./dist && npm run copy && tsc",
     "copy": "npm run copy:experiences",
     "copy:experiences": "rm -rf ./dist/experiences && mkdir -p ./dist/experiences && cp -r ../dist/experiences ./dist/",

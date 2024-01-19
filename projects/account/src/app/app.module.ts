@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { commonEnvironment } from 'projects/common/environments/environment';
 import { COMMON_ENVIRONMENT_TOKEN } from 'projects/common/environments/environment.interface';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { FirebaseApp, initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
@@ -24,7 +24,8 @@ import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angula
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => {
-      const functions = getFunctions();
+      const app = inject(FirebaseApp);
+      const functions = getFunctions(app, "asia-east1");
       if (commonEnvironment.useEmulators) {
         connectFunctionsEmulator(functions, "127.0.0.1", commonEnvironment.emulators!.functions.port);
       }
