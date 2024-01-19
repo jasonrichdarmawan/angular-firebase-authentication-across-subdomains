@@ -1,0 +1,51 @@
+name: CD_main_hello-world
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'functions/src/features/hello-world/**'
+
+jobs:
+  buildCloudFunction:
+    needs: [buildAngular]
+    name: Build Cloud Function
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Cloud Function Dependencies
+        working-directory: ./functions
+        run: npm install
+      - name: Build Cloud Function
+        run: npm run build:functions
+      - name: Archive Cloud Function Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: helloWorldCloudFunction
+          path: |
+            functions/**
+            !functions/node_modules
+  deploy:
+    name: Deploy
+    needs: [buildAngular, buildCloudFunction]
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Cloud Function Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: helloWorldCloudFunction
+          path: functions/
+      - name: Install Cloud Function Dependencies
+        working-directory: ./functions
+        run: npm install
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions:helloWorld
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_TO_POINT_ORG }}
