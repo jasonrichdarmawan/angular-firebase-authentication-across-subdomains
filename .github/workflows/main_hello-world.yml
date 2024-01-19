@@ -18,7 +18,7 @@ jobs:
         working-directory: ./functions
         run: npm install
       - name: Build Cloud Function
-        run: npm run tsc
+        run: npm run --prefix functions tsc
       - name: Archive Cloud Function Artifact
         uses: actions/upload-artifact@master
         with:
