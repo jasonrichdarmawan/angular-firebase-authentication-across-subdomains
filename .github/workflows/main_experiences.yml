@@ -39,6 +39,13 @@ jobs:
         with:
           name: experiencesAngular
           path: dist/experiences/
+      - name: Create JSON
+        id: create-json
+        uses: jsdaniell/create-json@v1.2.2
+        with:
+          name: "serviceAccountKeys.json"
+          json: ${{ secrets.SERVICE_ACCOUNT_KEYS }}
+          dir: 'functions/'
       - name: Build Cloud Function
         run: npm run --prefix functions copy:experiences && npm run build:functions
       - name: Archive Cloud Function Artifact

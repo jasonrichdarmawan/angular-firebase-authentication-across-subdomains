@@ -55,6 +55,7 @@ const handleCors = (req: Request, res: Response) => {
   const allowedOrigins = ["https://account.topoint.org", "https://experiences.topoint.org", "https://checkout.topoint.org"];
   const origin = req.get("origin") ?? "";
 
+
   if (allowedOrigins.includes(origin)) {
     res.set("Access-Control-Allow-Origin", origin);
   }
