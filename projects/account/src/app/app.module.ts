@@ -8,7 +8,7 @@ import { commonEnvironment } from 'projects/common/environments/environment';
 import { COMMON_ENVIRONMENT_TOKEN } from 'projects/common/environments/environment.interface';
 import { FirebaseApp, initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
-import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideAuth,getAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
 import { ENVIRONMENT } from '../environments/environment.interface';
@@ -22,7 +22,13 @@ import { ENVIRONMENT } from '../environments/environment.interface';
     AppRoutingModule,
     BrowserTransferStateModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
+    provideAuth(() => {
+      const auth = getAuth();
+      if (commonEnvironment.useEmulators) {
+        connectAuthEmulator(auth, `http://127.0.0.1:${commonEnvironment.emulators!.auth.port}`);
+      }
+      return auth;
+    }),
     provideAnalytics(() => getAnalytics()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => {

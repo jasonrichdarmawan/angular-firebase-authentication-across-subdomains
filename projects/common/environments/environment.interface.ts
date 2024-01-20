@@ -11,10 +11,11 @@ export interface CommonEnvironment {
     };
     useEmulators: boolean;
     emulators?: {
+        auth: Emulator;
         functions: Emulator;
     };
     functions: {
-        getSessionCookie: Function;
+        createSessionToken: Function;
     };
 }
 

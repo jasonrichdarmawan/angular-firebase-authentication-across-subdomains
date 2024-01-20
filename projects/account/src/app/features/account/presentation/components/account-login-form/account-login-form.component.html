@@ -1,14 +1,13 @@
 <p>account-login-form works!</p>
 
-<form [formGroup]="form" (ngSubmit)="submitClicked()">
+<form [formGroup]="form">
     <span>Email: </span><input type="email" formControlName="email"><br>
     <span *ngIf="(email && email.dirty && !email.valid) ?? true" style="color: red;">Invalid email<br></span>
 
     <span>Password: </span><input type="password" formControlName="password"><br>
     <span *ngIf="(password && password.dirty && !password.valid) ?? true" style="color: red;">Invalid Password<br></span>
 
-    <span>CSRF Token: {{ csrfToken }}<br></span>
-
-    <button type="submit" [disabled]="!form.valid || isLoggingIn">{{ !isLoggingIn ? 'submit' : 'loading' }}</button><br>
+    <button [disabled]="!form.valid || isLoggingIn" (click)="submitClicked()">{{ !isLoggingIn ? 'submit' : 'loading' }}</button><br>
+    <button [disabled]="!form.valid || isLoggingIn" (click)="registerClicked()">{{ !isLoggingIn ? 'register' : 'loading' }}</button>
     <span *ngIf="error" style="color: red;">{{ error.code }} {{ error.message }}</span>
 </form>

@@ -2,11 +2,11 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 // TODO: @angular/fire bug.
 import { setPersistence } from '@firebase/auth';
-import { inMemoryPersistence, Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { TransferState, makeStateKey } from '@angular/platform-browser';
-import { ENVIRONMENT, Environment } from 'projects/account/src/environments/environment.interface';
+import { inMemoryPersistence, Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { makeStateKey } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { COMMON_ENVIRONMENT_TOKEN, CommonEnvironment } from 'projects/common/environments/environment.interface';
+import { isPlatformServer } from '@angular/common';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 
 const CSRF_TOKEN = makeStateKey<string>("CSRF_TOKEN");
 
@@ -26,10 +26,8 @@ export class AccountLoginFormComponent implements OnInit {
   constructor(
     private auth: Auth,
     private router: Router,
-    private transferState: TransferState,
-    @Inject(ENVIRONMENT) private environment: Environment,
     @Inject(PLATFORM_ID) private platformId: Object,
-    @Inject(COMMON_ENVIRONMENT_TOKEN) private commonEnvironment: CommonEnvironment,
+    private functions: Functions,
     ) {
     this.isLoggingIn = false;
     this.form = new FormGroup({
@@ -46,15 +44,7 @@ export class AccountLoginFormComponent implements OnInit {
           Validators.required
         ]
       ),
-      csrfToken: new FormControl(
-        '',
-        [
-          Validators.required
-        ]
-      )
     });
-
-    this.fetchCsrfToken();
   }
 
   ngOnInit(): void {
@@ -66,10 +56,6 @@ export class AccountLoginFormComponent implements OnInit {
 
   get password(): AbstractControl | null {
     return this.form.get('password');
-  }
-
-  get csrfToken(): string {
-    return this.form.get('csrfToken')?.value;
   }
 
   /**
@@ -89,6 +75,8 @@ export class AccountLoginFormComponent implements OnInit {
       // Signed in
       const user = userCredential.user;
       // ...
+      const idToken = await user.getIdToken();
+      await this.createSessionToken(idToken);
 
       this.router.navigate(['account']);
     } catch (error: any) {
@@ -107,26 +95,46 @@ export class AccountLoginFormComponent implements OnInit {
     return true;
   }
 
-  private fetchCsrfToken() {
-    if (this.transferState.hasKey(CSRF_TOKEN)) {
-      const csrfToken = this.transferState.get(CSRF_TOKEN, "");
-      this.form.patchValue({ csrfToken: csrfToken });
-      // Set session expiration to 1 minute.
-      const expiresIn = 60 * 1000;
-      this.setCookie("csrfToken", csrfToken, expiresIn, this.environment.production);
-      return;
+  async registerClicked(): Promise<boolean> {
+    if (this.email === null) { return false; }
+    if (this.password === null) { return false; }
+    
+    setPersistence(this.auth as any, inMemoryPersistence);
+
+    this.isLoggingIn = true;
+    try {
+      let userCredential = await createUserWithEmailAndPassword(this.auth, this.email.value, this.password.value)
+      this.isLoggingIn = false;
+      // Signed in
+      const user = userCredential.user;
+      // ...
+      const idToken = await user.getIdToken();
+      await this.createSessionToken(idToken);
+
+      this.router.navigate(['account']);
+    } catch (error: any) {
+      this.isLoggingIn = false;
+      this.error = {
+        code: error.code,
+        message: error.message
+      }
+
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(`Error Code ${errorCode}, Error Message ${errorMessage}`)
+      return false;
     }
 
-    const csrfToken = (Math.random() * 100000000000000000).toString();
-    this.form.patchValue({ csrfToken: csrfToken })
-    this.transferState.set(CSRF_TOKEN, csrfToken);
+    return true;
   }
 
-  private setCookie(key: string, value: string, expiresIn: number, secure: boolean) {
-    let date = new Date();
-    date.setTime(date.getTime() + expiresIn);
-    let expires = `expires=${date.toUTCString()}`;
-    let path = `path=/`;
-    document.cookie = `${key}=${value}; ${expires}; ${path}${secure ? '; secure' : ''}`;
+  /**
+   * @bug Set-Cookie in the response header is ignored.
+   */
+  private async createSessionToken(idToken: string) {
+    if (isPlatformServer(this.platformId)) { return; }
+
+    const callable = httpsCallable<{idToken: string}>(this.functions, "createSessionToken",);
+    const { data } = await callable({idToken: idToken});
   }
 }

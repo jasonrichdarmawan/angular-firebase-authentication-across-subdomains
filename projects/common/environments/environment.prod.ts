@@ -15,8 +15,8 @@ export const commonEnvironment: CommonEnvironment = {
     },
     useEmulators: false,
     functions: {
-        getSessionCookie: {
-            baseUrl: "https://getsessioncookie-dgxrx5mnma-de.a.run.app"
+        createSessionToken: {
+            baseUrl: "//createsessiontoken-dgxrx5mnma-de.a.run.app"
         }
     }
 }

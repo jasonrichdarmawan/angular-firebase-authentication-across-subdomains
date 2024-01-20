@@ -18,13 +18,16 @@ export const commonEnvironment: CommonEnvironment = {
     },
     useEmulators: true,
     emulators: {
+        auth: {
+            port: 9099,
+        },
         functions: {
             port: 5001,
         },
     },
     functions: {
-        getSessionCookie: {
-            baseUrl: "http://127.0.0.1:5001/topoint-org/asia-east1/getSessionCookie"
+        createSessionToken: {
+            baseUrl: "//127.0.0.1:5001/topoint-org/asia-east1/createSessionToken"
         }
     }
 }

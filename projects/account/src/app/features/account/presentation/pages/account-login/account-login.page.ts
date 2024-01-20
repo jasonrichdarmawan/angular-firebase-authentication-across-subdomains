@@ -1,5 +1,4 @@
-import { isPlatformServer } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 
@@ -16,7 +15,6 @@ export class AccountLoginPage implements OnInit {
   constructor(
     private functions: Functions,
     private transferState: TransferState,
-    @Inject(PLATFORM_ID) private platformId: Object,
     ) {
     this.fetchHelloWorld();
   }
