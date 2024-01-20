@@ -37,7 +37,7 @@ export const createSessionToken = onRequest(
         const options = {
           maxAge: expiresIn,
           httpOnly: true,
-          secure: false, /* to test in localhost */
+          secure: process.env.FUNCTIONS_EMULATOR === "true" ? false : true, /* to test in localhost */
         };
         res.cookie("session", sessionCookie, options);
         res.send({data: "success"});
@@ -52,17 +52,16 @@ export const createSessionToken = onRequest(
  * @todo staging and dev environment.
  */
 const handleCors = (req: Request, res: Response) => {
-  // const allowedOrigins = ["https://account.topoint.org", "https://experiences.topoint.org", "https://checkout.topoint.org"];
-  // const origin = req.get("origin") ?? "";
+  const allowedOrigins = ["https://account.topoint.org", "https://experiences.topoint.org", "https://checkout.topoint.org"];
+  const origin = req.get("origin") ?? "";
 
-  // if (allowedOrigins.includes(origin)) {
-  //   res.set("Access-Control-Allow-Origin", origin);
-  // }
+  if (allowedOrigins.includes(origin)) {
+    res.set("Access-Control-Allow-Origin", origin);
+  }
 
-  // if (process.env.FUNCTIONS_EMULATOR) {
-  //   res.set("Access-Control-Allow-Origin", "*");
-  // }
-  res.set("Access-Control-Allow-Origin", "*");
+  if (process.env.FUNCTIONS_EMULATOR) {
+    res.set("Access-Control-Allow-Origin", "*");
+  }
 
   if (req.method === "OPTIONS") {
     // Send response to OPTIONS requests
