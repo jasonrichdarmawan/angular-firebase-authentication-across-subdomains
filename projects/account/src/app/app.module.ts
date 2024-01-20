@@ -1,16 +1,17 @@
 import { NgModule, inject } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { commonEnvironment } from 'projects/common/environments/environment';
 import { COMMON_ENVIRONMENT_TOKEN } from 'projects/common/environments/environment.interface';
-import { FirebaseApp, getApp, initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { FirebaseApp, initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
+import { ENVIRONMENT } from '../environments/environment.interface';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angula
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
+    BrowserTransferStateModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideAnalytics(() => getAnalytics()),
@@ -36,6 +38,10 @@ import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angula
     { 
       provide: COMMON_ENVIRONMENT_TOKEN,
       useValue: commonEnvironment,
+    },
+    {
+      provide: ENVIRONMENT,
+      useValue: environment,
     },
     ScreenTrackingService,
     UserTrackingService,

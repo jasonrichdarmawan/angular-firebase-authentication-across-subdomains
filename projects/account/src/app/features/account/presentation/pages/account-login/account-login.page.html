@@ -1,4 +1,4 @@
-<p>account works!</p>
+<p>account-login works!</p>
 
 <ng-container [ngSwitch]="helloWorld">
     <ng-container *ngSwitchCase="undefined">
@@ -7,13 +7,8 @@
     <p *ngSwitchDefault>response from the helloWorld cloud function: {{ helloWorld }}</p>
 </ng-container>
 
-<ng-container [ngSwitch]="isLoggedIn">
-    <ng-container *ngSwitchCase="undefined">
-        <ng-container *ngTemplateOutlet="loading"></ng-container>
-    </ng-container>
-    <app-account-user *ngSwitchCase="true"></app-account-user>
-</ng-container>
-
 <ng-template #loading>
     <span>Loading<br></span>
 </ng-template>
+
+<app-account-login-form></app-account-login-form>

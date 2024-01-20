@@ -22,4 +22,9 @@ export const commonEnvironment: CommonEnvironment = {
             port: 5001,
         },
     },
+    functions: {
+        getSessionCookie: {
+            baseUrl: "http://127.0.0.1:5001/topoint-org/asia-east1/getSessionCookie"
+        }
+    }
 }

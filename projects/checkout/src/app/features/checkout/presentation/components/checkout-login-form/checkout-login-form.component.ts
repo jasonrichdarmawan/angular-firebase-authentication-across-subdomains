@@ -48,10 +48,6 @@ export class CheckoutLoginFormComponent implements OnInit {
     return this.form.get('password');
   }
 
-  get isUserLoggedIn(): boolean {
-    return false;
-  }
-
   /**
    * @reference
    * 1. https://firebase.google.com/docs/auth/web/auth-state-persistence

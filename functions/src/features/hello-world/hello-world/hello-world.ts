@@ -1,30 +1,27 @@
-import {info} from "firebase-functions/logger";
-import {onRequest, Request} from "firebase-functions/v2/https";
-import {Response} from "express";
+// reference: https://firebase.google.com/docs/functions/http-events?gen=2nd
 
-export const helloWorld = onRequest((request, response) => {
-  info("helloWorld");
+import {onRequest} from "firebase-functions/v2/https";
 
-  handleCors(request, response);
+import express = require("express");
+const app = express();
 
-  response.send({
-    data: "Hello World",
-  });
+app.post("/", (req, res) => {
+  handleCors(req, res);
+
+  res.send({data: "Hello World"});
 });
 
-const handleCors = (request: Request, response: Response) => {
+const handleCors = (req: express.Request, res: express.Response) => {
   const allowedOrigins = ["https://account.topoint.org", "https://experiences.topoint.org", "https://checkout.topoint.org"];
-  const origin = request.get("origin") ?? "";
+  const origin = req.get("origin") ?? "";
 
   if (allowedOrigins.includes(origin)) {
-    response.set("Access-Control-Allow-Origin", origin);
+    res.set("Access-Control-Allow-Origin", origin);
   }
 
-  if (request.method === "OPTIONS") {
-    // Send response to OPTIONS requests
-    response.set("Access-Control-Allow-Methods", "GET");
-    response.set("Access-Control-Allow-Headers", "Content-Type");
-    response.set("Access-Control-Max-Age", "3600");
-    response.status(204).send("");
+  if (process.env.FUNCTIONS_EMULATOR) {
+    res.set("Access-Control-Allow-Origin", "*");
   }
 };
+
+export const helloWorld = onRequest(app);

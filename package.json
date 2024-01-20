@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "serve": "npm run start | npm run dev:ssr",
-    "start": "npm run start:account | npm run start:checkout",
-    "start:account": "ng serve --project account",
+    "serve": "npm-run-all -p serve:functions start dev:ssr",
+    "serve:functions": "npm run --prefix functions serve",
+    "start": "npm run start:checkout",
     "start:checkout": "ng serve --project checkout",
-    "dev:ssr": "npm run dev:ssr:experiences",
+    "dev:ssr": "npm-run-all -p dev:ssr:account dev:ssr:experiences",
+    "dev:ssr:account": "ng run account:serve-ssr --port 4200",
     "dev:ssr:experiences": "ng run experiences:serve-ssr --port 4201",
     "build": "npm run build:csr && npm run build:ssr && npm run build:functions",
     "build:csr": "npm run build:csr:account && npm run build:csr:checkout",
@@ -18,8 +19,9 @@
     "build:functions": "npm run --prefix functions build",
     "serve:ssr": "npm run serve:ssr:experiences",
     "serve:ssr:experiences": "export PORT=4201; node dist/experiences/server/main.js",
-    "watch": "npm run watch:account && npm run watch:checkout",
+    "watch": "npm-run-all -p watch:account watch:experiences watch:checkout",
     "watch:account": "ng build --watch --project account --configuration development",
+    "watch:experiences": "ng build --watch --project experiences --configuration development",
     "watch:checkout": "ng build --watch --project checkout --configuration development",
     "test": "ng test",
     "prerender": "ng run account:prerender"
@@ -59,6 +61,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "~4.6.2"
   }
 }

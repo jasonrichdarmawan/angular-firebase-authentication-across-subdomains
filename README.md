@@ -62,6 +62,10 @@ const analytics = getAnalytics(app);
 
 The solution is to use `$ ng run <application>:serve-ssr`
 
+# Functions development
+
+Run `npx firebase emulators:start --only functions`
+
 # Bug Solution
 
 1. `Component auth has not been registered yet`

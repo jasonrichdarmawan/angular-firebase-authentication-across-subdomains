@@ -12,7 +12,10 @@ export interface CommonEnvironment {
     useEmulators: boolean;
     emulators?: {
         functions: Emulator;
-    }
+    };
+    functions: {
+        getSessionCookie: Function;
+    };
 }
 
 export interface Emulator {
@@ -20,5 +23,9 @@ export interface Emulator {
 }
 
 export interface Project {
+    baseUrl: string;
+}
+
+export interface Function {
     baseUrl: string;
 }
