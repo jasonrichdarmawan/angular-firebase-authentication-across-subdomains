@@ -7,6 +7,7 @@ import * as admin from "firebase-admin";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import serviceAccountKey from "../../../../serviceAccountKeys.json";
 
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccountKey as admin.ServiceAccount),
 });
