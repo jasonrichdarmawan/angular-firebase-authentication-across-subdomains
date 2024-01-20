@@ -48,6 +48,11 @@ jobs:
           dir: 'functions/'
       - name: Build Cloud Function
         run: npm run --prefix functions copy:account && npm run build:functions
+      - name: Clean JSON
+        run: |
+          rm -f \
+            functions/serviceAccountKeys.json \
+            functions/lib/serviceAccountKeys.json
       - name: Archive Cloud Function Artifact
         uses: actions/upload-artifact@master
         with:
@@ -76,6 +81,13 @@ jobs:
       - name: Install Cloud Function Dependencies
         working-directory: ./functions
         run: npm install
+      - name: Create JSON
+        id: create-json
+        uses: jsdaniell/create-json@v1.2.2
+        with:
+          name: "serviceAccountKeys.json"
+          json: ${{ secrets.SERVICE_ACCOUNT_KEYS }}
+          dir: 'functions/'
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:

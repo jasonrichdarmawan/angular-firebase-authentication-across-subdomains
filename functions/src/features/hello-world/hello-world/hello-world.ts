@@ -20,7 +20,6 @@ const handleCors = (req: Request, res: Response) => {
     res.set("Access-Control-Allow-Origin", "*");
   }
 
-
   if (req.method === "OPTIONS") {
     // Send response to OPTIONS requests
     res.set("Access-Control-Allow-Methods", "GET");
