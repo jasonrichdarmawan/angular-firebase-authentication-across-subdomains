@@ -91,6 +91,6 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:account,functions:accountUniversal
+          args: deploy --only hosting:account,functions:accountUniversal,functions:create-session-token
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_TO_POINT_ORG }}
