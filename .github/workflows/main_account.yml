@@ -23,9 +23,33 @@ jobs:
         with:
           name: accountAngular
           path: dist/account/
+  buildCloudFunction:
+    needs: [buildAngular]
+    name: Build Cloud Function
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Cloud Function Dependencies
+        working-directory: ./functions
+        run: npm install
+      - name: Download Angular Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: accountAngular
+          path: dist/account/
+      - name: Build Cloud Function
+        run: npm run --prefix functions copy:account && npm run build:functions
+      - name: Archive Cloud Function Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: accountCloudFunction
+          path: |
+            functions/**
+            !functions/node_modules
   deploy:
     name: Deploy
-    needs: [buildAngular]
+    needs: [buildAngular, buildCloudFunction]
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -36,6 +60,14 @@ jobs:
         with:
           name: accountAngular
           path: dist/account/
+      - name: Download Cloud Function Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: accountCloudFunction
+          path: functions/
+      - name: Install Cloud Function Dependencies
+        working-directory: ./functions
+        run: npm install
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
