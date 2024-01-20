@@ -45,13 +45,13 @@ jobs:
         with:
           name: "serviceAccountKeys.json"
           json: ${{ secrets.SERVICE_ACCOUNT_KEYS }}
-          dir: 'functions/'
+          dir: 'functions/src/'
       - name: Build Cloud Function
         run: npm run --prefix functions copy:experiences && npm run build:functions
       - name: Clean JSON
         run: |
           rm -f \
-            functions/serviceAccountKeys.json \
+            functions/src/serviceAccountKeys.json \
             functions/lib/serviceAccountKeys.json
       - name: Archive Cloud Function Artifact
         uses: actions/upload-artifact@master
@@ -87,7 +87,7 @@ jobs:
         with:
           name: "serviceAccountKeys.json"
           json: ${{ secrets.SERVICE_ACCOUNT_KEYS }}
-          dir: 'functions/'
+          dir: 'functions/src/'
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:

@@ -5,7 +5,7 @@ import {Request, Response} from "express";
 import * as admin from "firebase-admin";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-import serviceAccountKey from "../../../../serviceAccountKeys.json";
+import serviceAccountKey from "../../../serviceAccountKeys.json";
 
 
 admin.initializeApp({
