@@ -8,7 +8,7 @@
     "start": "npm run start:checkout",
     "start:checkout": "ng serve --project checkout",
     "dev:ssr": "npm-run-all -p dev:ssr:account dev:ssr:experiences",
-    "dev:ssr:account": "ng run account:serve-ssr --port 5202",
+    "dev:ssr:account": "ng run account:serve-ssr --port 4200",
     "dev:ssr:experiences": "ng run experiences:serve-ssr --port 4201",
     "build": "npm-run-all -p build:csr build:ssr && npm run --prefix functions build",
     "build:csr": "npm run build:csr:checkout",
