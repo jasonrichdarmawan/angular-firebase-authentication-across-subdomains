@@ -20,8 +20,12 @@ export const createSessionToken = onRequest(
   async (req: Request, res: Response) => {
     handleCors(req, res);
 
+    const idToken = req.body?.data?.idToken;
 
-    const idToken = req.body.data.idToken;
+    if (idToken === undefined) {
+      res.status(401).send({data: "unauthorized"});
+      return;
+    }
 
     // Set session expiration to 5 days.
     const expiresIn = 60 * 60 * 24 * 5 * 1000;

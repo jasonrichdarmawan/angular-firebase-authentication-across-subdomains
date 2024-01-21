@@ -3,12 +3,9 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 // TODO: @angular/fire bug.
 import { setPersistence } from '@firebase/auth';
 import { inMemoryPersistence, Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { makeStateKey } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { isPlatformServer } from '@angular/common';
 import { Functions, httpsCallable } from '@angular/fire/functions';
-
-const CSRF_TOKEN = makeStateKey<string>("CSRF_TOKEN");
 
 @Component({
   selector: 'app-account-login-form',
