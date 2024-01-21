@@ -26,6 +26,9 @@ export const commonEnvironment: CommonEnvironment = {
         },
     },
     functions: {
+        setCookie: {
+            baseUrl: "//127.0.0.1:5001/topoint-org/asia-east1/setCookie"
+        },
         createSessionToken: {
             baseUrl: "//127.0.0.1:5001/topoint-org/asia-east1/createSessionToken"
         }

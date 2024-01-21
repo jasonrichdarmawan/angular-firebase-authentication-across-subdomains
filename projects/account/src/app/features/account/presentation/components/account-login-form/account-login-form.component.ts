@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { isPlatformServer } from '@angular/common';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { HttpClient } from '@angular/common/http';
+import { COMMON_ENVIRONMENT_TOKEN, CommonEnvironment } from 'projects/common/environments/environment.interface';
 
 @Component({
   selector: 'app-account-login-form',
@@ -26,6 +27,7 @@ export class AccountLoginFormComponent implements OnInit {
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private functions: Functions,
+    @Inject(COMMON_ENVIRONMENT_TOKEN) private commonEnvironment: CommonEnvironment,
     private httpClient: HttpClient,
     ) {
     this.isLoggingIn = false;
@@ -138,7 +140,7 @@ export class AccountLoginFormComponent implements OnInit {
     const callable = httpsCallable<{idToken: string}>(this.functions, "createSessionToken",);
     const { data } = await callable({idToken: idToken});
   }
-  
+
   /**
    * for testing purpose
    * @bug the browser will not store the cookie.
@@ -152,9 +154,7 @@ export class AccountLoginFormComponent implements OnInit {
         const { data } = await callable();
         break;
       case "HttpClient":
-        const observable = this.httpClient.get(
-          "http://127.0.0.1:5001/topoint-org/asia-east1/setCookie"
-        )
+        const observable = this.httpClient.get(this.commonEnvironment.functions.setCookie.baseUrl)
 
         observable.subscribe(next => {
           console.log(next);

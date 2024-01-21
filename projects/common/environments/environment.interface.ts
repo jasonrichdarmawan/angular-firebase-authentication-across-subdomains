@@ -15,6 +15,7 @@ export interface CommonEnvironment {
         functions: Emulator;
     };
     functions: {
+        setCookie: Function;
         createSessionToken: Function;
     };
 }
