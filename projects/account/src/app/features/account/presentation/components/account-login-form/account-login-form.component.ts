@@ -6,6 +6,7 @@ import { inMemoryPersistence, Auth, signInWithEmailAndPassword, createUserWithEm
 import { Router } from '@angular/router';
 import { isPlatformServer } from '@angular/common';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-account-login-form',
@@ -25,6 +26,7 @@ export class AccountLoginFormComponent implements OnInit {
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private functions: Functions,
+    private httpClient: HttpClient,
     ) {
     this.isLoggingIn = false;
     this.form = new FormGroup({
@@ -42,6 +44,8 @@ export class AccountLoginFormComponent implements OnInit {
         ]
       ),
     });
+
+    this.fetchSetCookie();
   }
 
   ngOnInit(): void {
@@ -133,5 +137,29 @@ export class AccountLoginFormComponent implements OnInit {
 
     const callable = httpsCallable<{idToken: string}>(this.functions, "createSessionToken",);
     const { data } = await callable({idToken: idToken});
+  }
+  
+  /**
+   * for testing purpose
+   * @bug the browser will not store the cookie.
+   */
+  private async fetchSetCookie(withMethod: "httpsCallable" | "HttpClient" = "httpsCallable") {
+    if (isPlatformServer(this.platformId)) { return; }
+
+    switch (withMethod) {
+      case "httpsCallable":
+        const callable = httpsCallable(this.functions, "setCookie");
+        const { data } = await callable();
+        break;
+      case "HttpClient":
+        const observable = this.httpClient.get(
+          "http://127.0.0.1:5001/topoint-org/asia-east1/setCookie"
+        )
+
+        observable.subscribe(next => {
+          console.log(next);
+        })
+        break;
+    }
   }
 }
