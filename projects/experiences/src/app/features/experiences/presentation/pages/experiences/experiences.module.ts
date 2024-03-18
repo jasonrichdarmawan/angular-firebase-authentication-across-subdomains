@@ -6,7 +6,6 @@ import { ExperiencesPage } from './experiences.page';
 import { ExperiencesLoginFormModule } from '../../../components/experiences-login-form/experiences-login-form.module';
 import { ExperiencesUserModule } from '../../../components/experiences-user/experiences-user.module';
 
-
 @NgModule({
   declarations: [
     ExperiencesPage

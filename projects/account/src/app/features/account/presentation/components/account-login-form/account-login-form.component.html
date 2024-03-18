@@ -7,7 +7,7 @@
     <span>Password: </span><input type="password" formControlName="password"><br>
     <span *ngIf="(password && password.dirty && !password.valid) ?? true" style="color: red;">Invalid Password<br></span>
 
-    <button [disabled]="!form.valid || isLoggingIn" (click)="submitClicked()">{{ !isLoggingIn ? 'submit' : 'loading' }}</button><br>
-    <button [disabled]="!form.valid || isLoggingIn" (click)="registerClicked()">{{ !isLoggingIn ? 'register' : 'loading' }}</button>
+    <button [disabled]="!form.valid || isLoading" (click)="signInClicked()">{{ !isLoading ? 'sign in' : 'loading' }}</button><br>
+    <button [disabled]="!form.valid || isLoading" (click)="registerClicked()">{{ !isLoading ? 'register' : 'loading' }}</button>
     <span *ngIf="error" style="color: red;">{{ error.code }} {{ error.message }}</span>
 </form>

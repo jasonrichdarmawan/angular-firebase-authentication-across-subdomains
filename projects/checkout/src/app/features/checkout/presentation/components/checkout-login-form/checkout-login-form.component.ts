@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { setPersistence } from 'firebase/auth';
+import { createUserWithEmailAndPassword, setPersistence } from 'firebase/auth';
 import { inMemoryPersistence, Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
@@ -9,7 +9,7 @@ import { inMemoryPersistence, Auth, signInWithEmailAndPassword } from '@angular/
   styleUrls: ['./checkout-login-form.component.scss']
 })
 export class CheckoutLoginFormComponent implements OnInit {
-  isLoggingIn: boolean;
+  isLoading: boolean;
   error?: {
     code: string;
     message: string;
@@ -19,7 +19,7 @@ export class CheckoutLoginFormComponent implements OnInit {
   constructor(
     private auth: Auth
     ) {
-    this.isLoggingIn = false;
+    this.isLoading = false;
     this.form = new FormGroup({
       email: new FormControl(
         '',
@@ -52,22 +52,22 @@ export class CheckoutLoginFormComponent implements OnInit {
    * @reference
    * 1. https://firebase.google.com/docs/auth/web/auth-state-persistence
    */
-  async submitClicked(): Promise<boolean> {
+  async signInClicked(): Promise<boolean> {
     if (this.email === null) { return false; }
     if (this.password === null) { return false; }
     
     setPersistence(this.auth as any, inMemoryPersistence);
 
-    this.isLoggingIn = true;
+    this.isLoading = true;
     try {
       let userCredential = await signInWithEmailAndPassword(this.auth, this.email.value, this.password.value)
-      this.isLoggingIn = false;
+      this.isLoading = false;
       // Signed in
       const user = userCredential.user;
       // ...
 
     } catch (error: any) {
-      this.isLoggingIn = false;
+      this.isLoading = false;
       this.error = {
         code: error.code,
         message: error.message,
@@ -82,4 +82,37 @@ export class CheckoutLoginFormComponent implements OnInit {
     return true;
   }
 
+  /**
+   * @reference
+   * 1. https://firebase.google.com/docs/auth/web/auth-state-persistence
+   */
+  async registerClicked(): Promise<boolean> {
+    if (this.email === null) { return false; }
+    if (this.password === null) { return false; }
+    
+    // setPersistence(this.auth as any, inMemoryPersistence);
+
+    this.isLoading = true;
+    try {
+      let userCredential = await createUserWithEmailAndPassword(this.auth, this.email.value, this.password.value);
+      this.isLoading = false;
+      // Signed in
+      const user = userCredential.user;
+      // ...
+
+    } catch (error: any) {
+      this.isLoading = false;
+      this.error = {
+        code: error.code,
+        message: error.message
+      }
+
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(`Error Code ${errorCode}, Error Message ${errorMessage}`);
+      return false;
+    }
+
+    return true;
+  }
 }

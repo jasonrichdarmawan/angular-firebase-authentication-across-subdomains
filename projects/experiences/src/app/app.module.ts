@@ -9,7 +9,7 @@ import { commonEnvironment } from 'projects/common/environments/environment';
 import { COMMON_ENVIRONMENT_TOKEN } from 'projects/common/environments/environment.interface';
 import { FirebaseApp, initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
-import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideAuth,getAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
 
@@ -23,13 +23,20 @@ import { provideFunctions,getFunctions, connectFunctionsEmulator } from '@angula
     BrowserTransferStateModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
-    provideAuth(() => getAuth()),
+    provideAuth(() => {
+      const app = inject(FirebaseApp);
+      const auth = getAuth(app);
+      if (commonEnvironment.useEmulators && commonEnvironment.emulators?.auth) {
+        connectAuthEmulator(auth, `http://127.0.0.1:${commonEnvironment.emulators.auth.port}`);
+      }
+      return auth;
+    }),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => {
       const app = inject(FirebaseApp);
       const functions = getFunctions(app, "asia-east1");
-      if (commonEnvironment.useEmulators) {
-        connectFunctionsEmulator(functions, "127.0.0.1", commonEnvironment.emulators!.functions.port);
+      if (commonEnvironment.useEmulators && commonEnvironment.emulators?.functions.port) {
+        connectFunctionsEmulator(functions, "127.0.0.1", commonEnvironment.emulators.functions.port);
       }
       return functions;
     })

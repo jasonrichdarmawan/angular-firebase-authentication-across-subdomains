@@ -15,7 +15,7 @@ import { COMMON_ENVIRONMENT_TOKEN, CommonEnvironment } from 'projects/common/env
   styleUrls: ['./account-login-form.component.scss']
 })
 export class AccountLoginFormComponent implements OnInit {
-  isLoggingIn: boolean;
+  isLoading: boolean;
   error?: {
     code: string;
     message: string;
@@ -30,7 +30,7 @@ export class AccountLoginFormComponent implements OnInit {
     @Inject(COMMON_ENVIRONMENT_TOKEN) private commonEnvironment: CommonEnvironment,
     private httpClient: HttpClient,
     ) {
-    this.isLoggingIn = false;
+    this.isLoading = false;
     this.form = new FormGroup({
       email: new FormControl(
         '',
@@ -65,16 +65,16 @@ export class AccountLoginFormComponent implements OnInit {
    * @reference
    * 1. https://firebase.google.com/docs/auth/web/auth-state-persistence
    */
-  async submitClicked(): Promise<boolean> {
+  async signInClicked(): Promise<boolean> {
     if (this.email === null) { return false; }
     if (this.password === null) { return false; }
     
     setPersistence(this.auth as any, inMemoryPersistence);
 
-    this.isLoggingIn = true;
+    this.isLoading = true;
     try {
       let userCredential = await signInWithEmailAndPassword(this.auth, this.email.value, this.password.value)
-      this.isLoggingIn = false;
+      this.isLoading = false;
       // Signed in
       const user = userCredential.user;
       // ...
@@ -83,7 +83,7 @@ export class AccountLoginFormComponent implements OnInit {
 
       this.router.navigate(['account']);
     } catch (error: any) {
-      this.isLoggingIn = false;
+      this.isLoading = false;
       this.error = {
         code: error.code,
         message: error.message
@@ -104,10 +104,10 @@ export class AccountLoginFormComponent implements OnInit {
     
     setPersistence(this.auth as any, inMemoryPersistence);
 
-    this.isLoggingIn = true;
+    this.isLoading = true;
     try {
       let userCredential = await createUserWithEmailAndPassword(this.auth, this.email.value, this.password.value)
-      this.isLoggingIn = false;
+      this.isLoading = false;
       // Signed in
       const user = userCredential.user;
       // ...
@@ -116,7 +116,7 @@ export class AccountLoginFormComponent implements OnInit {
 
       this.router.navigate(['account']);
     } catch (error: any) {
-      this.isLoggingIn = false;
+      this.isLoading = false;
       this.error = {
         code: error.code,
         message: error.message

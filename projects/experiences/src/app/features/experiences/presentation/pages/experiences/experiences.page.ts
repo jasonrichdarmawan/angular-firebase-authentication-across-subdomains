@@ -9,7 +9,7 @@ const HELLO_WORLD = makeStateKey<string>("HELLO_WORLD");
 @Component({
   selector: 'app-experiences',
   templateUrl: './experiences.page.html',
-  styleUrls: ['./experiences.page.scss']
+  styleUrls: ['./experiences.page.scss'],
 })
 export class ExperiencesPage implements OnInit {
   isLoggedIn?: boolean;
